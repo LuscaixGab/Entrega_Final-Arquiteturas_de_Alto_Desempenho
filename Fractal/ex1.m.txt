@@ -1,0 +1,15 @@
+A1 = rand(3000,3000);
+tic;
+B1 = fft(A1);
+time1 = toc;
+tic;
+A2 = gpuArray(A1);
+
+B2 = fft(A2);
+
+B2 = gather(B2);
+time2 = toc;
+class(B2);
+speedup = time1/time2;
+
+fprintf('O Speed up é %.4f\n', speedup);

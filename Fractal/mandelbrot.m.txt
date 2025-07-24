@@ -1,0 +1,33 @@
+N = 1000;% Tamanho da imagem 
+max_iter = 500;%Número de iterações
+% Limites do plano complexo
+xlim = [-2, 1];        % intervalo no eixo real
+ylim = [-1.5, 1.5];    % intervalo no eixo imaginário
+% Geração da grade de coordenadas
+x = linspace(xlim(1), xlim(2), N);
+y = linspace(ylim(1), ylim(2), N);
+[X, Y] = meshgrid(x, y);
+C = X + 1i * Y; 		% número complexo c = x + i*y
+% Função para verificar se pertence ao conjunto de Mandelbrot
+mandelbrotFunc = @(c) mandelbrot_iter(c, max_iter);
+% Aplica a função a cada elemento do array
+tic;
+M = arrayfun(mandelbrotFunc, C);
+time = toc;
+% Exibe a imagem do fractal
+imagesc(x, y, M); colormap(hot); axis image;
+xlabel('Parte Real'); ylabel('Parte Imaginária');
+title(['Conjunto de Mandelbrot (Arrayfun) - Tempo: ', num2str(time), ' s']);
+% -------------------------------
+% Função para calcular Mandelbrot
+function count = mandelbrot_iter(c, max_iter)
+   z = 0;
+   for k = 1:max_iter
+       z = z^2 + c;
+       if abs(z) > 2
+           count = k;
+           return;
+       end
+   end
+   count = max_iter;
+end
