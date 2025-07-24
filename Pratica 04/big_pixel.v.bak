@@ -1,0 +1,13 @@
+module big_pixel(
+	input [3299:0] pixels_in,
+	input clk,
+	output reg out);
+	
+	integer contador_x = 0;
+	integer contador_y = 0;
+	
+	always#(posedge clk) begin
+		
+	end
+	
+endmodule

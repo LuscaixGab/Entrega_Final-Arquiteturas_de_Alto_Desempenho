@@ -1,0 +1,7 @@
+module soma_um(
+	input [2:0] x,
+	output [2:0] s);
+	
+	assign s = x + 3'b001;
+	
+endmodule

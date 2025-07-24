@@ -1,0 +1,11 @@
+module controle #(
+	parameter DATA_W = 17)(
+	input clk, rst,
+	input [1:0] meu_x, meu_y,
+	input [DATA_W-1:0] data_cima, data_baixo, data_esquerda, data_direita, data_core,
+	input empty_cima, empty_baixo, empty_esquerda, empty_direita, empty_core,
+	input full_cima, full_baixo, full_esquerda, full_direita, full_core);
+	
+	
+	
+endmodule

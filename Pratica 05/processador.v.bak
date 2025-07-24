@@ -1,0 +1,4 @@
+module processador(
+	inptut clk, rst,
+	input data
+	)

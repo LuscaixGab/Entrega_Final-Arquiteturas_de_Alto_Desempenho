@@ -1,0 +1,60 @@
+module game_of_life_grid (
+    input wire clk,
+    input wire rst,
+    output reg [0:0] current_frame [0:47][0:63]
+);
+
+    reg [0:0] next_frame [0:47][0:63];
+
+    // Buffer 1D para carregar o arquivo .mif com $readmemb
+    reg [0:0] init_mem [0:3071];
+
+    integer x, y, dx, dy;
+    integer live_neighbors;
+
+    // === INICIALIZAÇÃO: carregar .mif ===
+    initial begin
+        $readmemb("game_of_life_random.mif", init_mem);
+        for (y = 0; y < 48; y = y + 1)
+            for (x = 0; x < 64; x = x + 1)
+                current_frame[y][x] = init_mem[y * 64 + x];
+    end
+
+    // === PROCESSAMENTO a cada clock ===
+    always @(posedge clk or posedge rst) begin
+        if (rst) begin
+            // Recarrega estado inicial do .mif se quiser resetar
+            for (y = 0; y < 48; y = y + 1)
+                for (x = 0; x < 64; x = x + 1)
+                    current_frame[y][x] <= init_mem[y * 64 + x];
+        end else begin
+            // 1. Calcula próxima geração
+            for (y = 0; y < 48; y = y + 1) begin
+                for (x = 0; x < 64; x = x + 1) begin
+                    live_neighbors = 0;
+
+                    for (dy = -1; dy <= 1; dy = dy + 1)
+                        for (dx = -1; dx <= 1; dx = dx + 1)
+                            if (!(dx == 0 && dy == 0)) begin
+                                int nx = x + dx;
+                                int ny = y + dy;
+                                if (nx >= 0 && nx < 64 && ny >= 0 && ny < 48)
+                                    if (current_frame[ny][nx])
+                                        live_neighbors = live_neighbors + 1;
+                            end
+
+                    if (current_frame[y][x]) begin
+                        next_frame[y][x] = (live_neighbors == 2 || live_neighbors == 3);
+                    end else begin
+                        next_frame[y][x] = (live_neighbors == 3);
+                    end
+                end
+            end
+
+            // 2. Atualiza todos os registradores de uma vez
+            for (y = 0; y < 48; y = y + 1)
+                for (x = 0; x < 64; x = x + 1)
+                    current_frame[y][x] <= next_frame[y][x];
+        end
+    end
+endmodule

@@ -1,0 +1,11 @@
+module arbitrador(
+	input [4:0] req,
+	output [4:0] grant);
+
+	assign grant = req[4] ? 5'b10000 : 
+						req[3] ? 5'b01000 : 
+						req[2] ? 5'b00100 : 
+						req[1] ? 5'b00010 : 
+						req[0] ? 5'b00001 : 5'b00000;
+	
+endmodule

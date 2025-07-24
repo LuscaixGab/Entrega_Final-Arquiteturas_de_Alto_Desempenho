@@ -1,0 +1,40 @@
+module state_machine (
+    input wire clk,
+    input wire [3071:0] data_in,  // 64 * 48 = 3072 bits
+    output reg [3071:0] data_out
+);
+
+    integer x, y;
+    integer vizinhos;
+    integer idx;
+
+    always @(posedge clk) begin
+        for (x = 0; x < 64; x = x + 1) begin
+            for (y = 0; y < 48; y = y + 1) begin
+                idx = y * 64 + x;
+
+                if ((x > 0) && (x < 63) && (y > 0) && (y < 47)) begin
+                    vizinhos = 
+                        data_in[(y-1)*64 + (x-1)] +
+                        data_in[(y-1)*64 + x]     +
+                        data_in[(y-1)*64 + (x+1)] +
+                        data_in[y*64     + (x-1)] +
+                        data_in[y*64     + (x+1)] +
+                        data_in[(y+1)*64 + (x-1)] +
+                        data_in[(y+1)*64 + x]     +
+                        data_in[(y+1)*64 + (x+1)];
+                end else begin
+                    vizinhos = 0;  // bordas: assumimos padding com zeros
+                end
+
+                // Atualiza a célula atual
+                if (data_in[idx]) begin
+                    data_out[idx] <= ((vizinhos == 2) || (vizinhos == 3)) ? 1'b1 : 1'b0;
+                end else begin
+                    data_out[idx] <= (vizinhos == 3) ? 1'b1 : 1'b0;
+                end
+            end
+        end
+    end
+
+endmodule

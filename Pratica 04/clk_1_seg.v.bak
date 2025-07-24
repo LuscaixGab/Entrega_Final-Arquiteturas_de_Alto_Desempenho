@@ -1,0 +1,15 @@
+module clk_1_seg(
+	input clk,
+	output clk1seg);
+	
+	reg [17:0] contador;
+	
+	initial begin:
+		contador = 0;
+	end
+	
+	always@(posedge clk) begin:
+		contador = contador + 1;
+	end
+	
+	assign clk1seg = contador[17];

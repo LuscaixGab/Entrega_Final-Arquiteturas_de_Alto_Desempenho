@@ -1,0 +1,12 @@
+module switch_crossbar #(
+	parameter DATA_W = 17,
+	parameter SEL_CIMA = 3'b000,
+	parameter SEL_BAIXO = 3'b001,
+	parameter SEL_ESQUERDA = 3'b010,
+	parameter SEL_DIREITA = 3'b011,
+	parameter SEL_CORE = 3'b100)(
+	input [DATA_W-1:0] cima_in, baixo_in, esquerda_in, direita_in, core_in,
+	input [2:0] sel_cima, sel_baixo, sel_esquerda, sel_direita, sel_core,
+	output [DATA_W-1:0] cima_out, baixo_out, esquerda_out, direita_out, core_out);
+	
+endmodule

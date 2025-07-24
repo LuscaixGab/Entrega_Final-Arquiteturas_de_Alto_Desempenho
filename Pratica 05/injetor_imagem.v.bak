@@ -1,0 +1,10 @@
+module injetor_imagem #(
+	parameter DATA_W = 17)(
+	input clk, rst,
+	input ready,
+	output wr_en,
+	output [DATA_W-1:0] data_out);
+	
+	
+	
+endmodule

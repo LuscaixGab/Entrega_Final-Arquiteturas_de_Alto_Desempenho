@@ -1,0 +1,1 @@
+Warning (10268): Verilog HDL information at state_machine.v(20): always construct contains both blocking and non-blocking assignments File: C:/Users/Lucas/AppData/Local/quartus/Pratica 04/state_machine.v Line: 20

@@ -1,0 +1,8 @@
+module roteador(
+	input [15:0] cima_in, baixo_in, esquerda_in, direita_in,
+	input clk,
+	output [15:0] cima_out, baixo_out, esquerda_out, direita_out)
+	
+	
+	
+endmodule
